@@ -9,7 +9,12 @@ import {
     useGlobalStateContext,
   } from "../context/globalContext"
 
-const Header = () => {
+const Header = ({
+    onCursor,
+    setHamburgerPosition,
+    setToggleMenu,
+    toggleMenu,
+  }) => {
 
     const dispatch = useGlobalDispatchContext()
     const { currentTheme } = useGlobalStateContext()
@@ -22,6 +27,11 @@ const Header = () => {
           dispatch({ type: "TOGGLE_THEME", theme: "dark" })
         }
       }
+
+    // const menuHover = () => {
+    //     onCursor("locked")
+    //     setHamburgerPosition({ x: position.x, y: position.y + 72 })
+    //   }
 
     useEffect(() => {
         window.localStorage.setItem("theme", currentTheme)
@@ -38,9 +48,11 @@ const Header = () => {
         }}>
             <Container>
                 <Flex spaceBetween noHeight>
-                    <Logo>
+                    <Logo onMouseEnter={() => onCursor("hovered")}
+                          onMouseLeave={onCursor}>
                         <Link to="/">FURR</Link>
-                        <span  onClick={toggleTheme}></span>
+                        <span onMouseEnter={() => onCursor("pointer")}
+                             onMouseLeave={onCursor} onClick={toggleTheme}></span>
                         <Link to="/">W</Link>
                     </Logo>
                     <Menu>

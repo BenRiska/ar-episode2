@@ -5,6 +5,8 @@ import { useStaticQuery, graphql } from "gatsby"
 import { createGlobalStyle, ThemeProvider } from "styled-components"
 import { normalize } from "styled-normalize"
 
+import CustomCursor from "../components/customCursor"
+
 import Header from "./header"
 
 import {
@@ -16,7 +18,7 @@ const GlobalStyle = createGlobalStyle`
 ${normalize}
 * {
   text-decoration: none;
-  // cursor: none;
+  cursor: none;
 }
 html {
     box-sizing: border-box;
@@ -70,11 +72,23 @@ const Layout = ({ children }) => {
     // top: `${hamburgerPosition.y}px`,
   }
 
+  const onCursor = cursorType => {
+    cursorType = (cursorStyles.includes(cursorType) && cursorType) || false
+    dispatch({ type: "CURSOR_TYPE", cursorType: cursorType })
+  }
+
+
   return (
   <>
   <ThemeProvider theme={currentTheme === "dark" ? darkTheme : lightTheme}>
     <GlobalStyle/>
-    <Header/>
+    <CustomCursor toggleMenu={toggleMenu} />
+    <Header 
+    onCursor={onCursor}
+    toggleMenu={toggleMenu}
+    setToggleMenu={setToggleMenu}
+    hamburgerPosition={hamburgerPosition}
+    setHamburgerPosition={setHamburgerPosition}/>
     <main>{children}</main>
   </ThemeProvider>
   </>
