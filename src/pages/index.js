@@ -1,5 +1,8 @@
 import React from "react"
 import Layout from "../components/layout"
+
+import HomeBanner from "../components/homePage/HomeBanner"
+
 import {
   useGlobalStateContext,
   useGlobalDispatchContext,
@@ -14,7 +17,9 @@ const IndexPage = props => {
     dispatch({ type: "CURSOR_TYPE", cursorType: cursorType })
   }
 
-  return <Layout>Hey guys hope you are ready to learn!</Layout>
+  return (<Layout>
+            <HomeBanner onCursor={onCursor} />
+          </Layout>)
 }
 
 export default IndexPage
