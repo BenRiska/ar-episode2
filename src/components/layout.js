@@ -2,7 +2,43 @@ import React, { useState } from "react"
 import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
 
+import { createGlobalStyle, ThemeProvider } from "styled-components"
+import { normalize } from "styled-normalize"
+
+import Header from "./header"
+
+import {
+  useGlobalStateContext,
+  useGlobalDispatchContext,
+} from "../context/globalContext"
+
+const GlobalStyle = createGlobalStyle`
+${normalize}
+* {
+  text-decoration: none;
+  // cursor: none;
+}
+html {
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    font-size: 16px;
+  
+  
+}
+body {
+  font-size: 16px;
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background: ${props => props.theme.background};
+  overscroll-behavior: none;
+  overflow-x: hidden;
+}
+`
+
 const Layout = ({ children }) => {
+
+  const dispatch = useGlobalDispatchContext()
+  const { cursorStyles, currentTheme } = useGlobalStateContext()
+
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
@@ -13,7 +49,36 @@ const Layout = ({ children }) => {
     }
   `)
 
-  return <main>{children}</main>
+  const [hamburgerPosition, setHamburgerPosition] = useState({
+    x: 0,
+    y: 0,
+  })
+
+  const [toggleMenu, setToggleMenu] = useState(false)
+
+  const darkTheme = {
+    background: "#000",
+    text: "#fff",
+    // left: `${hamburgerPosition.x}px`,
+    // top: `${hamburgerPosition.y}px`,
+  }
+
+  const lightTheme = {
+    background: "#fff",
+    text: "#000",
+    // left: `${hamburgerPosition.x}px`,
+    // top: `${hamburgerPosition.y}px`,
+  }
+
+  return (
+  <>
+  <ThemeProvider theme={currentTheme === "dark" ? darkTheme : lightTheme}>
+    <GlobalStyle/>
+    <Header/>
+    <main>{children}</main>
+  </ThemeProvider>
+  </>
+  )
 }
 
 Layout.propTypes = {
