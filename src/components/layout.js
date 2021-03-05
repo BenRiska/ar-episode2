@@ -14,6 +14,7 @@ import {
   useGlobalStateContext,
   useGlobalDispatchContext,
 } from "../context/globalContext"
+import Footer from "./footer"
 
 const GlobalStyle = createGlobalStyle`
 ${normalize}
@@ -97,6 +98,8 @@ const Layout = ({ children }) => {
         setHamburgerPosition={setHamburgerPosition}
       />
     <main>{children}</main>
+    <Footer onCursor={onCursor}
+        setHamburgerPosition={setHamburgerPosition}/>
   </ThemeProvider>
   </>
   )
