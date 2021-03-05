@@ -8,6 +8,7 @@ import { normalize } from "styled-normalize"
 import CustomCursor from "../components/customCursor"
 
 import Header from "./header"
+import Navigation from "./navigation"
 
 import {
   useGlobalStateContext,
@@ -61,15 +62,15 @@ const Layout = ({ children }) => {
   const darkTheme = {
     background: "#000",
     text: "#fff",
-    // left: `${hamburgerPosition.x}px`,
-    // top: `${hamburgerPosition.y}px`,
+    left: `${hamburgerPosition.x}px`,
+    top: `${hamburgerPosition.y}px`,
   }
 
   const lightTheme = {
     background: "#fff",
     text: "#000",
-    // left: `${hamburgerPosition.x}px`,
-    // top: `${hamburgerPosition.y}px`,
+    left: `${hamburgerPosition.x}px`,
+    top: `${hamburgerPosition.y}px`,
   }
 
   const onCursor = cursorType => {
@@ -89,6 +90,12 @@ const Layout = ({ children }) => {
     setToggleMenu={setToggleMenu}
     hamburgerPosition={hamburgerPosition}
     setHamburgerPosition={setHamburgerPosition}/>
+    <Navigation
+        toggleMenu={toggleMenu}
+        setToggleMenu={setToggleMenu}
+        onCursor={onCursor}
+        setHamburgerPosition={setHamburgerPosition}
+      />
     <main>{children}</main>
   </ThemeProvider>
   </>
